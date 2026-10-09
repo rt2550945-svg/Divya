@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#140a2e">
+<title>Divya, this is for you 🌙</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Playfair+Display:ital,wght@0,700;1,600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--rose:#ff7eb3;--peach:#ffc08a;--gold:#ffe29a;--lav:#b79cff;--glass:rgba(255,255,255,.09);--line:rgba(255,255,255,.16)}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Quicksand,system-ui,sans-serif;color:#fff;min-height:100vh;overflow-x:hidden;
+background:radial-gradient(circle at 20% 0,#3b1a63 0,transparent 55%),radial-gradient(circle at 90% 100%,#6a1f5c 0,transparent 50%),#120a2a;background-attachment:fixed}
+button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
+canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+#stars{z-index:0}#fx{z-index:50}
+.fl{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.fl span{position:absolute;bottom:-40px;opacity:.5;animation:up linear forwards}
+@keyframes up{to{transform:translateY(-115vh) rotate(50deg);opacity:0}}
+h1,h2{font-family:'Playfair Display',serif;font-style:italic}
+.grad{background:linear-gradient(90deg,var(--rose),var(--peach),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hand{font-family:Caveat,cursive;font-size:24px}
+#app{display:none;position:relative;z-index:2;max-width:440px;margin:0 auto;padding:22px 18px 110px}
+.pg,.gv{display:none}.pg.on,.gv.on{display:block;animation:in .6s cubic-bezier(.2,.8,.2,1)}
+@keyframes in{from{opacity:0;transform:translateY(18px) scale(.97)}}
+.glass{background:var(--glass);border:1px solid var(--line);border-radius:26px;padding:22px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 10px 40px rgba(0,0,0,.3)}
+.tc{text-align:center}.sm{font-size:13px;opacity:.75;line-height:1.5}
+.btn{display:inline-block;background:linear-gradient(90deg,var(--rose),#ff9a8b);padding:15px 28px;border-radius:40px;font-weight:700;font-size:16px;box-shadow:0 8px 28px rgba(255,126,179,.45);transition:transform .15s}
+.btn:active{transform:scale(.94)}.btn.ghost{background:var(--glass);border:1px solid var(--line);box-shadow:none}
+/* gate */
+#gate{position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+#gate.off{display:none}
+.moon{font-size:84px;filter:drop-shadow(0 0 30px #ffe29a);animation:bob 4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-12px)}}
+#gate h1{font-size:46px;margin:14px 0 6px}
+.beat{margin-top:38px;font-size:74px;animation:beat 1.3s infinite;filter:drop-shadow(0 0 24px var(--rose))}
+@keyframes beat{15%{transform:scale(1.25)}30%{transform:scale(1)}45%{transform:scale(1.18)}}
+/* cake */
+.cake{position:relative;width:250px;height:230px;margin:30px auto 10px}
+.cake>div{position:absolute;left:50%;transform:translateX(-50%)}
+.pl{bottom:0;width:290px;height:14px;border-radius:50%;background:#fff3;border:1px solid var(--line)}
+.t2{bottom:12px;width:250px;height:84px;border-radius:16px 16px 22px 22px;background:linear-gradient(#ffd3e4,#ff9fc4)}
+.t1{bottom:92px;width:176px;height:66px;border-radius:16px;background:linear-gradient(#fff0d6,#ffc9a0)}
+.t1::before,.t2::before{content:"";position:absolute;top:0;left:0;right:0;height:18px;border-radius:16px 16px 40% 40%;background:#fff}
+.cs{bottom:156px;display:flex;gap:26px}
+.can{position:relative;width:9px;height:40px;border-radius:3px;background:repeating-linear-gradient(135deg,#8be9ff 0 6px,#fff 6px 12px);cursor:pointer}
+.can::before{content:"";position:absolute;inset:-22px -16px -4px}
+.can i{position:absolute;left:50%;top:-22px;width:14px;height:22px;transform:translateX(-50%);border-radius:50% 50% 50% 50%/65% 65% 35% 35%;background:radial-gradient(#fff 15%,#ffd24d 45%,#ff7a2f);box-shadow:0 0 22px 8px rgba(255,190,60,.7);animation:fk .25s infinite alternate}
+@keyframes fk{to{transform:translateX(-50%) scale(1.1,.92) rotate(5deg)}}
+.can.out i{display:none}
+.can.out::after{content:"💨";position:absolute;top:-34px;left:-6px;animation:up2 1.4s forwards}
+@keyframes up2{to{transform:translateY(-40px);opacity:0}}
+#wish{min-height:92px}
+#wish h2{font-size:34px;line-height:1.15}
+/* letter */
+.paper{padding:26px 22px}
+#lt{font-size:16.5px;line-height:1.75;white-space:pre-wrap;min-height:200px}
+.cur::after{content:"|";animation:bl .7s infinite}@keyframes bl{50%{opacity:0}}
+/* memories */
+.snap{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:20px 8px 18px;margin:0 -18px;padding-inline:40px;scrollbar-width:none}
+.snap::-webkit-scrollbar{display:none}
+.pol{flex:none;width:230px;background:#fff;color:#444;padding:11px 11px 14px;border-radius:6px;scroll-snap-align:center;box-shadow:0 14px 34px rgba(0,0,0,.45);text-align:center}
+.pol:nth-child(odd){transform:rotate(-3deg)}.pol:nth-child(even){transform:rotate(2.5deg)}
+.pol div{aspect-ratio:4/5;border-radius:3px;margin-bottom:10px;background:linear-gradient(135deg,#ffb4d1,#b79cff);display:flex;align-items:center;justify-content:center;font-size:54px;overflow:hidden}
+.pol img{width:100%;height:100%;object-fit:cover}
+.tl{border-left:2px dashed var(--line);margin:8px 0 0 10px;padding-left:22px}
+.tl div{position:relative;margin-bottom:20px}
+.tl div::before{content:"💗";position:absolute;left:-34px;top:-2px;font-size:16px;background:#2a1650;border-radius:50%}
+.tl b{color:var(--peach);font-size:12px;letter-spacing:.06em}.tl h3{margin:2px 0}
+/* games */
+.hub{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.gc{background:var(--glass);border:1px solid var(--line);border-radius:22px;padding:20px 12px;text-align:center;position:relative;transition:transform .2s}
+.gc:active{transform:scale(.95)}.gc span{font-size:40px;display:block;margin-bottom:6px}.gc b{display:block;font-size:15px}.gc small{opacity:.7;font-size:12px}
+.gc.done::after{content:"✔";position:absolute;top:8px;right:12px;color:#7dffb3}
+.back{margin-bottom:14px;opacity:.8;font-size:14px}
+.opt{display:block;width:100%;text-align:left;background:var(--glass);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:10px;font-weight:600;font-size:15px;transition:.25s}
+.opt.ok{background:#1fa86a99;border-color:#7dffb3}.opt.no{background:#d6336c99;animation:shk .4s}
+@keyframes shk{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.bar{height:6px;border-radius:6px;background:#fff2;margin-bottom:18px}.bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--rose),var(--gold));transition:width .4s}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.cd{aspect-ratio:1;perspective:500px}
+.cd div{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.cd.f div{transform:rotateY(180deg)}
+.cd b{position:absolute;inset:0;border-radius:14px;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;font-size:28px}
+.cd b:first-child{background:linear-gradient(135deg,#7b4dff,var(--rose));font-size:22px}
+.cd b:last-child{background:#fff;transform:rotateY(180deg)}
+.cd.m b:last-child{background:#a6ffcf}
+.arena{position:relative;height:340px;border-radius:22px;background:#0004;border:1px solid var(--line);overflow:hidden;margin-top:14px;touch-action:manipulation}
+.arena span{position:absolute;top:-50px;font-size:38px;animation:fall linear forwards;user-select:none}
+@keyframes fall{to{transform:translateY(420px)}}
+.arena .pop{animation:pp .35s forwards!important}@keyframes pp{to{transform:scale(1.8);opacity:0}}
+.big{font-size:50px;font-weight:700}
+.tod{min-height:190px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;margin:16px 0;font-size:20px;font-weight:700;line-height:1.4}
+.tag{font-size:12px;padding:5px 14px;border-radius:20px;background:linear-gradient(90deg,var(--rose),var(--lav));letter-spacing:.08em}
+/* coupons */
+.cp{display:flex;align-items:center;gap:14px;margin-top:14px;padding:16px;border-radius:20px;background:linear-gradient(135deg,#ffffff1c,#ffffff08);border:1.5px dashed var(--peach);text-align:left;width:100%;position:relative;overflow:hidden}
+.cp span{font-size:34px}.cp b{display:block;font-size:16px}.cp small{opacity:.75}
+.cp.red{opacity:.6}.cp.red::after{content:"REDEEMED ✔";position:absolute;right:12px;top:50%;transform:translateY(-50%) rotate(-10deg);border:2px solid #7dffb3;color:#7dffb3;padding:3px 8px;border-radius:6px;font-weight:700;font-size:12px;animation:in .3s}
+/* final */
+.star{font-size:90px;display:block;margin:20px auto;animation:beat 1.6s infinite;filter:drop-shadow(0 0 26px var(--gold))}
+/* nav */
+#nav{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:20;display:none;gap:2px;padding:7px;border-radius:30px;background:rgba(20,10,46,.75);border:1px solid var(--line);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);width:min(92vw,420px)}
+#nav button{flex:1;padding:8px 0;border-radius:22px;font-size:11px;font-weight:700;opacity:.65;transition:.25s}
+#nav button i{display:block;font-style:normal;font-size:20px}
+#nav button.on{opacity:1;background:linear-gradient(135deg,#ff7eb344,#b79cff44)}
+#snd{position:fixed;top:14px;right:14px;z-index:30;width:42px;height:42px;border-radius:50%;background:var(--glass);border:1px solid var(--line);display:none;font-size:17px;backdrop-filter:blur(10px)}
+</style></head><body>
+<canvas id="stars"></canvas><canvas id="fx"></canvas><div class="fl" id="fl"></div>
+<button id="snd">🔊</button>
+
+<div id="gate"><div class="moon">🌙</div><p class="sm" style="margin-top:14px"><span class="ME"></span> made something for</p>
+<h1 class="grad HER"></h1><p class="sm">Sit back. Get comfy. This takes a few minutes ✨</p>
+<button class="beat" id="start" aria-label="Open">💗</button><p class="sm">tap the heart</p></div>
+
+<div id="app">
+ <!-- HOME / CAKE -->
+ <section class="pg" id="home"><div class="tc">
+  <p class="hand" style="color:var(--gold)">Make a wish, <span class="HER"></span> ✨</p>
+  <p class="sm">Tap each candle to blow it out</p>
+  <div class="cake"><div class="cs"><b class="can"><i></i></b><b class="can"><i></i></b><b class="can"><i></i></b></div><div class="t1"></div><div class="t2"></div><div class="pl"></div></div>
+  <div id="wish"></div>
+  <button class="btn" id="toLetter" style="display:none">Read what I wrote 💌</button></div></section>
+
+ <!-- LETTER -->
+ <section class="pg" id="letter">
+  <h2 class="grad tc" style="font-size:36px;margin-bottom:14px">A letter for you</h2>
+  <div class="glass paper"><div id="lt" class="cur"></div><p class="hand" style="margin-top:18px;text-align:right">Forever yours,<br><span class="ME" style="color:var(--peach);font-size:30px"></span> 💕</p></div>
+  <p class="tc"><button class="sm" id="skip" style="margin:14px 0;text-decoration:underline">skip typing</button></p>
+  <p class="tc"><button class="btn" data-go="memo">Our memories 📸</button></p></section>
+
+ <!-- MEMORIES -->
+ <section class="pg" id="memo">
+  <h2 class="grad tc" style="font-size:36px">Us, so far</h2><p class="sm tc">swipe through 👉</p>
+  <div class="snap" id="snap"></div>
+  <div class="glass"><div class="tl" id="tl"></div></div>
+  <p class="tc" style="margin-top:22px"><button class="btn" data-go="games">Let's play 🎮</button></p></section>
+
+ <!-- GAMES -->
+ <section class="pg" id="games">
+  <div class="gv" id="g_hub"><h2 class="grad tc" style="font-size:36px">Couple Arcade 🕹️</h2>
+   <p class="sm tc">Play all 4 to unlock the secret page 🔒</p>
+   <div class="hub">
+    <button class="gc" data-v="quiz"><span>🧠</span><b>How Well Do You Know Us?</b><small>5 questions</small></button>
+    <button class="gc" data-v="match"><span>🃏</span><b>Love Match</b><small>find the pairs</small></button>
+    <button class="gc" data-v="catch"><span>💘</span><b>Catch My Heart</b><small>20 seconds</small></button>
+    <button class="gc" data-v="tod"><span>🎲</span><b>Truth or Dare</b><small>couple edition</small></button></div></div>
+  <div class="gv" id="g_quiz"><button class="back" data-v="hub">← Arcade</button><div class="bar"><i id="qb"></i></div><div class="glass" id="qa"></div></div>
+  <div class="gv" id="g_match"><button class="back" data-v="hub">← Arcade</button><p class="tc sm">Moves: <b id="mv">0</b></p><div class="grid" id="mg"></div><div class="tc" id="mw" style="margin-top:14px"></div></div>
+  <div class="gv" id="g_catch"><button class="back" data-v="hub">← Arcade</button>
+   <div class="tc"><span class="big grad" id="cs">0</span> <span class="sm">💗 caught &nbsp;·&nbsp; ⏱ <b id="ct">20</b>s</span><p class="sm">Tap 💗 💖 💘 — dodge the 💔!</p></div>
+   <div class="arena" id="ar"></div><p class="tc" style="margin-top:14px"><button class="btn" id="cgo">Start</button></p></div>
+  <div class="gv" id="g_tod"><button class="back" data-v="hub">← Arcade</button>
+   <div class="glass tod" id="td"><span class="big">🎲</span>Pick one!</div>
+   <div style="display:flex;gap:12px;justify-content:center"><button class="btn" data-t="t">Truth 💭</button><button class="btn ghost" data-t="d">Dare 🔥</button></div></div>
+ </section>
+
+ <!-- COUPONS -->
+ <section class="pg" id="coupon">
+  <h2 class="grad tc" style="font-size:36px">Love Coupons</h2><p class="sm tc">Tap to redeem. Valid forever. No expiry. No excuses 😌</p><div id="cps"></div></section>
+
+ <!-- FINAL -->
+ <section class="pg" id="final"></section>
+</div>
+
+<nav id="nav">
+ <button data-g="home"><i>🎂</i>Wish</button><button data-g="letter"><i>💌</i>Letter</button><button data-g="memo"><i>📸</i>Us</button>
+ <button data-g="games"><i>🎮</i>Games</button><button data-g="coupon"><i>🎟️</i>Coupons</button><button data-g="final"><i>🔒</i>Secret</button></nav>
+
+<script>
+/* ================= ✏️ EDIT YOUR STUFF HERE ================= */
+const C={
+ her:"Divya", me:"Your Name", music:"music.mp3", lockFinal:true,
+ letter:`My Divya,
+
+Happy Birthday, my love! 🎂
+
+Write your real letter here. Tell her how you met, the first time you realised you liked her, the little things she does that make your whole day.
+
+Tell her what she means to you, what you promise her, and what you're excited about for the next year together.
+
+You make my world softer, funnier and a lot more beautiful. I love you more than I know how to type. 💕`,
+ photos:[["photo1.jpg","Our first picture 🥹"],["photo2.jpg","My favourite smile"],["photo3.jpg","Us being us"],["photo4.jpg","Add a caption"]],
+ timeline:[["DAY ONE","The day we met","Write the story in one or two lines."],["THE FIRST DATE","Nervous, but so happy","What do you remember most?"],["THE MOMENT I KNEW","I'm in love","When did you know?"],["TODAY","Your birthday","And I'm still falling for you."]],
+ quiz:[
+  ["Where did we have our first date?",["Cafe ☕","Park 🌳","Movie 🎬","Video call 📱"],0],
+  ["What's my favourite thing about you?",["Your smile","Your laugh","Your eyes","Everything 😌"],3],
+  ["Who falls asleep first on our calls?",["Me 😴","Divya 😴","Both","Nobody"],1],
+  ["What's our song?",["Song A","Song B","Song C","Song D"],0],
+  ["Who said 'I love you' first?",["Me","Divya","Same time","We don't talk about it 🙈"],0]],
+ truths:["What was your first impression of me?","What's one thing I do that you secretly love?","What song reminds you of us?","What's the silliest thing you've done because of me?","When did you first realise you liked me?","What's your favourite memory of us?"],
+ dares:["Send me your cutest selfie right now 🤳","Sing 10 seconds of our song 🎤","Say 'I love you' in 3 funny accents 😂","Do your best dance move on video call 💃","Give me a compliment starting with every letter of my name","Describe our future house in 20 seconds 🏡"],
+ coupons:[["🎬","Movie Night","You pick the film. I won't complain."],["🍕","Dinner Date","Anywhere you want. I'm paying."],["🤗","Unlimited Hugs","Redeem anytime, anywhere."],["🛍️","Shopping Trip","I'll carry the bags 😌"],["🌅","Surprise Day Out","Just say yes and show up."],["🙈","Win Any Argument","One free pass. Use it wisely."]],
+ final:"Divya, you're my favourite person, my best friend and my home. Thank you for being you. Happy Birthday, my love. I'll keep choosing you, every single day. ❤️"
+};
+/* =========================================================== */
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const rnd=a=>a[Math.random()*a.length|0],sh=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+$$('.HER').forEach(e=>e.textContent=C.her);$$('.ME').forEach(e=>e.textContent=C.me);
+const done=new Set();let typed=false;
+
+/* stars */
+const sc=$('#stars'),sx=sc.getContext('2d');let S=[];
+function rs(){sc.width=innerWidth;sc.height=innerHeight;S=Array.from({length:110},()=>({x:Math.random()*sc.width,y:Math.random()*sc.height,r:Math.random()*1.5+.3,p:Math.random()*6}))}
+rs();addEventListener('resize',rs);
+(function st(t){sx.clearRect(0,0,sc.width,sc.height);S.forEach(s=>{sx.globalAlpha=.35+.65*Math.abs(Math.sin(t/900+s.p));sx.fillStyle='#fff';sx.beginPath();sx.arc(s.x,s.y,s.r,0,7);sx.fill()});requestAnimationFrame(st)})(0);
+
+/* confetti + fireworks */
+const fc=$('#fx'),fx=fc.getContext('2d');let P=[],run=false;
+function fr(){fc.width=innerWidth;fc.height=innerHeight}fr();addEventListener('resize',fr);
+const COL=['#ff7eb3','#ffe29a','#b79cff','#8be9ff','#fff','#ffc08a'];
+function loop(){fx.clearRect(0,0,fc.width,fc.height);P=P.filter(p=>p.l>0);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=p.g;p.vx*=.99;p.l--;p.a+=.2;
+ fx.globalAlpha=Math.min(1,p.l/30);fx.fillStyle=p.c;if(p.s){fx.beginPath();fx.arc(p.x,p.y,p.z,0,7);fx.fill()}else{fx.save();fx.translate(p.x,p.y);fx.rotate(p.a);fx.fillRect(-p.z,-p.z/2,p.z*2,p.z);fx.restore()}});
+ if(P.length)requestAnimationFrame(loop);else run=false}
+function add(a){P.push(...a);if(!run){run=true;loop()}}
+function confetti(){add(Array.from({length:150},()=>({x:Math.random()*fc.width,y:-10,vx:Math.random()*4-2,vy:Math.random()*3+2,g:.07,l:180,a:0,z:Math.random()*5+3,c:rnd(COL)})))}
+function boom(x,y){const c=rnd(COL);add(Array.from({length:70},()=>{const a=Math.random()*6.28,v=Math.random()*5+1;return{x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,g:.05,l:70,a:0,z:2.2,c,s:1}}))}
+function show(n){for(let i=0;i<n;i++)setTimeout(()=>boom(fc.width*(.15+Math.random()*.7),fc.height*(.15+Math.random()*.4)),i*320)}
+
+/* floating emoji */
+const E=['💗','💕','✨','🌸','💖','🦋','⭐'];
+setInterval(()=>{const s=document.createElement('span');s.textContent=rnd(E);s.style.left=Math.random()*100+'vw';s.style.fontSize=12+Math.random()*18+'px';s.style.animationDuration=8+Math.random()*7+'s';$('#fl').appendChild(s);setTimeout(()=>s.remove(),15000)},900);
+
+/* music */
+const au=C.music?new Audio(C.music):null;let pl=false;if(au)au.loop=true;
+function music(o){if(!au)return;pl=o;o?au.play().catch(()=>{}):au.pause();$('#snd').textContent=o?'🔊':'🔇'}$('#snd').onclick=()=>music(!pl);
+
+/* navigation */
+function go(id){$$('.pg').forEach(p=>p.classList.toggle('on',p.id===id));$$('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.g===id));scrollTo(0,0);
+ if(id==='letter'&&!typed)typeL();if(id==='games')gv('hub');if(id==='final')fin()}
+$$('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.g));$$('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+$('#start').onclick=()=>{$('#gate').classList.add('off');$('#app').style.display='block';$('#nav').style.display='flex';$('#snd').style.display='block';music(true);go('home');confetti()};
+
+/* cake */
+let out=0;$$('.can').forEach(c=>c.onclick=()=>{if(c.classList.contains('out'))return;c.classList.add('out');
+ if(++out===3){confetti();show(4);$('#wish').innerHTML=`<h2 class="grad">Happy Birthday,<br>${C.her}! 🎉</h2><p class="sm" style="margin-top:8px">May every wish you just made come true 💫</p>`;$('#toLetter').style.display='inline-block'}});
+$('#toLetter').onclick=()=>go('letter');
+
+/* letter */
+let ti;function typeL(){typed=true;const el=$('#lt');let i=0;ti=setInterval(()=>{el.textContent=C.letter.slice(0,++i);if(i>=C.letter.length){clearInterval(ti);el.classList.remove('cur');$('#skip').style.display='none'}},32)}
+$('#skip').onclick=()=>{clearInterval(ti);$('#lt').textContent=C.letter;$('#lt').classList.remove('cur');$('#skip').style.display='none'};
+
+/* memories */
+$('#snap').innerHTML=C.photos.map(p=>`<div class="pol"><div><img src="${p[0]}" alt="" onerror="this.parentNode.textContent='💞'"></div>${p[1]}</div>`).join('');
+$('#tl').innerHTML=C.timeline.map(t=>`<div><b>${t[0]}</b><h3>${t[1]}</h3><p class="sm">${t[2]}</p></div>`).join('');
+
+/* games hub */
+function gv(v){$$('.gv').forEach(x=>x.classList.toggle('on',x.id==='g_'+v));scrollTo(0,0);
+ if(v==='hub')$$('.gc').forEach(g=>g.classList.toggle('done',done.has(g.dataset.v)));
+ if(v==='quiz')qz();if(v==='match')mt();if(v==='catch'){$('#ar').innerHTML='';$('#cs').textContent=0;$('#ct').textContent=20;$('#cgo').style.display='inline-block'}if(v==='tod')$('#td').innerHTML='<span class="big">🎲</span>Pick one!'}
+$$('.gc,.back').forEach(b=>b.onclick=()=>gv(b.dataset.v));
+function win(g){done.add(g);updNav()}
+function updNav(){const u=done.size>=4||!C.lockFinal;$('#nav [data-g=final] i').textContent=u?'🌟':'🔒'}
+
+/* quiz */
+let qi=0,qs=0;const bad=["Wrong 😤 sleeping on the couch tonight","Hmm… did you even listen to me? 🙄","Bold of you to get that wrong 😂","Aww no! But I still love you 💕"];
+function qz(){qi=0;qs=0;qq()}
+function qq(){if(qi>=C.quiz.length){const p=qs/C.quiz.length,m=p==1?"PERFECT! You know me too well 🥹":p>.5?"Not bad, my love! Study harder 😉":"We need to talk… 😂 Date night to fix this!";
+ $('#qb').style.width='100%';$('#qa').innerHTML=`<div class="tc"><div class="big grad">${qs}/${C.quiz.length}</div><h2 style="margin:12px 0">${m}</h2><button class="btn" data-v="hub">Back to Arcade</button></div>`;
+ $('#qa .btn').onclick=()=>gv('hub');win('quiz');if(p>.5)confetti();return}
+ const q=C.quiz[qi];$('#qb').style.width=qi/C.quiz.length*100+'%';
+ $('#qa').innerHTML=`<p class="sm">Question ${qi+1}</p><h2 style="font-size:24px;margin-top:6px">${q[0]}</h2>`+q[1].map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join('')+'<p class="sm tc" id="fb" style="margin-top:14px;min-height:20px"></p>';
+ $$('#qa .opt').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;$$('#qa .opt').forEach(x=>x.style.pointerEvents='none');
+  if(i==q[2]){b.classList.add('ok');qs++;$('#fb').textContent='Yesss! 💖'}else{b.classList.add('no');$$('#qa .opt')[q[2]].classList.add('ok');$('#fb').textContent=rnd(bad)}
+  setTimeout(()=>{qi++;qq()},1500)})}
+
+/* match */
+function mt(){const em=['💖','🍕','🎬','🌹','🧸','🍫'];let a=null,lock=false,mv=0,ok=0;$('#mv').textContent=0;$('#mw').innerHTML='';
+ $('#mg').innerHTML=sh([...em,...em]).map(e=>`<div class="cd" data-e="${e}"><div><b>💗</b><b>${e}</b></div></div>`).join('');
+ $$('.cd').forEach(c=>c.onclick=()=>{if(lock||c.classList.contains('f'))return;c.classList.add('f');
+  if(!a){a=c;return}$('#mv').textContent=++mv;
+  if(a.dataset.e===c.dataset.e){a.classList.add('m');c.classList.add('m');a=null;if(++ok===6){win('match');confetti();$('#mw').innerHTML=`<h2 class="grad" style="font-size:26px">Matched in ${mv} moves 💞</h2><p class="sm">Just like us — perfect pair!</p>`}}
+  else{lock=true;const p=a;a=null;setTimeout(()=>{p.classList.remove('f');c.classList.remove('f');lock=false},750)}})}
+
+/* catch */
+let cI,tI;$('#cgo').onclick=()=>{let sc=0,t=20;const ar=$('#ar');ar.innerHTML='';$('#cs').textContent=0;$('#ct').textContent=t;$('#cgo').style.display='none';
+ cI=setInterval(()=>{const s=document.createElement('span'),bd=Math.random()<.22;s.textContent=bd?'💔':rnd(['💗','💖','💘']);s.style.left=Math.random()*(ar.clientWidth-44)+'px';s.style.animationDuration=2.4+Math.random()*1.4+'s';
+  s.onpointerdown=()=>{if(s.classList.contains('pop'))return;sc=Math.max(0,sc+(bd?-3:1));$('#cs').textContent=sc;s.classList.add('pop');setTimeout(()=>s.remove(),300)};
+  s.onanimationend=()=>s.remove();ar.appendChild(s)},430);
+ tI=setInterval(()=>{$('#ct').textContent=--t;if(t<=0){clearInterval(cI);clearInterval(tI);ar.innerHTML=`<div class="tc" style="padding-top:110px"><div class="big grad">${sc} 💗</div><h2 style="margin:10px 0">${sc>=15?"You caught my whole heart!":"You already own my heart anyway 😘"}</h2></div>`;win('catch');if(sc>=15)confetti();$('#cgo').textContent='Play again';$('#cgo').style.display='inline-block'}},1000)};
+
+/* truth or dare */
+$$('[data-t]').forEach(b=>b.onclick=()=>{const t=b.dataset.t=='t';$('#td').innerHTML=`<span class="tag">${t?'TRUTH 💭':'DARE 🔥'}</span>${rnd(t?C.truths:C.dares)}`;win('tod')});
+
+/* coupons */
+$('#cps').innerHTML=C.coupons.map(c=>`<button class="cp"><span>${c[0]}</span><div><b>${c[1]}</b><small>${c[2]}</small></div></button>`).join('');
+$$('.cp').forEach(c=>c.onclick=()=>{if(!c.classList.contains('red')){c.classList.add('red');boom(innerWidth/2,innerHeight/2)}});
+
+/* final */
+function fin(){const u=done.size>=4||!C.lockFinal,el=$('#final');
+ if(!u){el.innerHTML=`<div class="glass tc" style="margin-top:50px"><span class="big">🔒</span><h2 style="font-size:28px;margin:10px 0">Almost there, ${C.her}!</h2><p class="sm">Play all 4 games to unlock the secret page.<br>${done.size}/4 done</p><br><button class="btn" data-go="games">Go to games 🎮</button></div>`;$('#final .btn').onclick=()=>go('games');return}
+ el.innerHTML=`<div class="tc"><h2 class="grad" style="font-size:40px;margin-top:6px">One last thing…</h2><button class="star" id="stb">🌟</button><p class="sm">Tap the star</p>
+ <div class="glass" style="margin-top:20px"><p style="font-size:17px;line-height:1.7">${C.final}</p><p class="hand" style="margin-top:14px;color:var(--peach);font-size:28px">— ${C.me} 💕</p></div>
+ <p style="margin-top:22px"><button class="btn ghost" id="rp">↻ Replay</button></p></div>`;
+ $('#stb').onclick=()=>{show(7);confetti()};$('#rp').onclick=()=>location.reload();show(5);confetti()}
+updNav();
+</script></body></html>
